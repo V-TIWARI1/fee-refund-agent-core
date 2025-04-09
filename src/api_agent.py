@@ -1,4 +1,5 @@
-#uvicorn api_agent:app --reload
+#uvicorn api_agent:app --reload --port 8081
+#http://localhost:8081/welcome/1
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
 from langchain_openai import ChatOpenAI
@@ -48,6 +49,7 @@ Fee Refund flow: whenever user ask for fee-refun/refund below is the standard fl
 6. Display the refund status while display the status show total amount requested and total amount refunded.
 
 Note-submit_refund can be called only for transaction Id user has provided. agent should not do fee refund with out user specifying transaction
+agent should be able to call get_fee_charged_transactions for all account one by one if query requires it to call
 """
 
 system_message = """
