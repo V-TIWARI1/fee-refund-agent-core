@@ -4,7 +4,7 @@ import json
 @tool
 def get_customer_accounts(customer_id: int) -> list:
     """
-    Fetches the list of bank accounts associated with a given customer.
+    Fetches the list of bank accounts associated with a given customer only for fee refund context.
 
     Args:
         customer_id (int): The unique identifier for the customer.

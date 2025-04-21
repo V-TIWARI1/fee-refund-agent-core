@@ -37,23 +37,30 @@ llm = ChatOpenAI(
 customer_data = get_customer_context()
 policy_tool = create_policy_retriever_tool_from_file("policy.txt", OPENAI_API_KEY)
 
-fee_refund_flow="""
-For general inquiry related to fee charged. Agent can decide which function to call, agent can do all Inquiry related call to answer user question,but for fee refund follow below instruction
-Fee Refund flow: whenever user ask for fee-refun/refund below is the standard flow.
+fee_refund_flow = """
+For general inquiries related to fees charged, the agent can autonomously decide which functions to call. The agent may use any inquiry-related functions to answer the user's questions. However, for fee refund requests, the following standard flow must be followed:
 
-1. Call get_customer_accounts with the customer ID to retrieve account details.
-2. once you receiveed the list of account number,You must respond with the list of accounts, and ask the user to enter an account number.
-3. once user have entered an account number, call get_fee_charged_transactions.
-4. Show the list of fee transactions and ask the user for transaction IDs they want refund,if refund status is false it means it is eligible for fee refund and if its value is true it means it is already refunded.
-5. once user has provided transaction ids, Call submit_refund for selected transaction IDs only to process the refund.
-6. Display the refund status while display the status show total amount requested and total amount refunded.
+**Fee Refund Flow:**
 
-Note-submit_refund can be called only for transaction Id user has provided. agent should not do fee refund with out user specifying transaction
-agent should be able to call get_fee_charged_transactions for all account one by one if query requires it to call
+1. Call `get_customer_accounts` with the customer ID to retrieve the list of customer accounts.
+2. Once the list of account numbers is received, respond with the list and ask the user to select an account by entering the account number.
+3. When the user provides an account number, call `get_fee_charged_transactions` for that account.
+4. Display the list of fee-charged transactions. Ask the user to select the transaction IDs they want refunded.  
+   - If `refund_status` is `false`, the transaction is eligible for a refund.  
+   - If `refund_status` is `true`, the transaction has already been refunded.
+5. Once the user selects transaction IDs, ask them to select a refund reason **for each transaction**.  
+   - Valid refund reasons: `standard`, `hardship`, `disaster`
+6. After the user provides the transaction IDs and reasons, call `submit_refund` **only for the selected transaction IDs** to process the refund.
+7. Display the refund status, including the **total amount requested** and the **total amount refunded**.
+
+**Important Notes:**
+- The `submit_refund` function must only be called for transaction IDs explicitly provided by the user.
+- The agent must not initiate a refund without the user's input.
+- If necessary to answer a user's query, the agent may call `get_fee_charged_transactions` for all accounts one by one.
 """
 
 system_message = """
-You are a bank fee refund assistant.
+You are a bank fee refund assistant only can perfrom request related to fee refund only or genral inquiry.
 You should decide which function to call based on user input. If the user asks about something unrelated to refunds, answer accordingly.
 You must remember the conversation context and decide which function to call based on the conversation history.
 """

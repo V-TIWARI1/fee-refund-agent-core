@@ -4,7 +4,7 @@ from langchain.tools import tool
 @tool
 def submit_refund(transaction_ids: list) -> dict:
     """
-    Processes refund requests for a list of fee transactions.
+    Processes fee refund requests for a list of fee transactions.
 
     This function takes a list of transaction IDs and attempts to process refunds 
     for each transaction. It returns a dictionary mapping each transaction ID 
