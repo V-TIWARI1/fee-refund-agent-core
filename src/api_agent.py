@@ -50,7 +50,7 @@ For general inquiries related to fees charged, the agent can autonomously decide
    - If `refund_status` is `true`, the transaction has already been refunded.
 5. Once the user selects transaction IDs, ask them to select a refund reason **for each transaction**.  
    - Valid refund reasons: `standard`, `hardship`, `disaster`
-6. After the user provides the transaction IDs and reasons, call `submit_refund` **only for the selected transaction IDs** to process the refund.
+6. After the user provides the transaction IDs and reasons, call `submit_refund` with dict with list of transaction-id and reson of refund **only for the selected transaction IDs** to process the refund.
 7. Display the refund status, including the **total amount requested** and the **total amount refunded**.
 
 **Important Notes:**
