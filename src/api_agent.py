@@ -48,10 +48,8 @@ For general inquiries related to fees charged, the agent can autonomously decide
 4. Display the list of fee-charged transactions. Ask the user to select the transaction IDs they want refunded.  
    - If `refund_status` is `false`, the transaction is eligible for a refund.  
    - If `refund_status` is `true`, the transaction has already been refunded.
-5. Once the user selects transaction IDs, ask them to select a refund reason **for each transaction**.  
-   - Valid refund reasons: `standard`, `hardship`, `disaster`
-6. After the user provides the transaction IDs and reasons, call `submit_refund` with dict with list of transaction-id and reson of refund **only for the selected transaction IDs** to process the refund.
-7. Display the refund status, including the **total amount requested** and the **total amount refunded**.
+5. After the user provides the transaction IDs and reasons, call `submit_refund` with with list of transaction-id **only for the selected transaction IDs** to process the refund.
+6. Display the refund status, including the **total amount requested** and the **total amount refunded**.
 
 **Important Notes:**
 - The `submit_refund` function must only be called for transaction IDs explicitly provided by the user.
